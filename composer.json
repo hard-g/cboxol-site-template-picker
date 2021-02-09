@@ -1,0 +1,19 @@
+{
+    "name": "cuny-academic-commons/openlab-site-template-picker",
+    "description": "",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "phpcompatibility/phpcompatibility-wp": "^2.1.0",
+        "wp-coding-standards/wpcs": "^2.3.0"
+    },
+    "scripts": {
+        "format": "phpcbf --report-summary --report-source",
+        "lint": "phpcs"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
