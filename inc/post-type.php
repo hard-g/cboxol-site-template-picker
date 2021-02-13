@@ -88,7 +88,7 @@ function register_admin_menu() {
 		__( 'Site Templates', 'cboxol-site-template-picker' ),
 		__( 'Site Templates', 'cboxol-site-template-picker' ),
 		'manage_sites',
-		get_admin_url( get_main_site_id(), 'edit.php?post_type=cboxol_site_template' ),
+		get_admin_url( \cbox_get_main_site_id(), 'edit.php?post_type=cboxol_site_template' ),
 		'',
 		7
 	);
