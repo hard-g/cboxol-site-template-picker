@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: CBOXOL Site Template Picker
- * Description: @todo
+ * Description: Allow network administrators to create, configure, and manage Template Sites.
  * Author:      OpenLab
  * Author URI:  https://openlab.bmcc.cuny.edu/
  * Plugin URI:  https://openlab.bmcc.cuny.edu/
@@ -18,6 +18,7 @@ const ROOT_DIR  = __DIR__;
 const ROOT_FILE = __FILE__;
 
 require_once ROOT_DIR . '/inc/functions.php';
+require_once ROOT_DIR . '/inc/assets.php';
 require_once ROOT_DIR . '/inc/rest.php';
 require_once ROOT_DIR . '/inc/post-type.php';
 require_once ROOT_DIR . '/inc/taxonomy.php';

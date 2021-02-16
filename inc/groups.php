@@ -21,15 +21,20 @@ function render_template_picker() {
 		return;
 	}
 
-	$categories = get_terms( [
-		'taxonomy'   => 'cboxol_template_category',
-		'number'     => 0,
-		'hide_empty' => true,
-	] );
+	$categories = get_terms(
+		[
+			'taxonomy'   => 'cboxol_template_category',
+			'number'     => 0,
+			'hide_empty' => true,
+		]
+	);
 
 	if ( is_wp_error( $categories ) ) {
 		$categories = [];
 	}
+
+	wp_enqueue_style( 'cboxol-site-template-picker-style' );
+	wp_enqueue_script( 'cboxol-site-template-picker-script' );
 
 	view( 'template-picker.php', [ 'categories' => $categories ] );
 }

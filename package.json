@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "cboxol-site-template-picker",
+  "description": "Allow network administrators to create, configure, and manage Template Sites.",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "dev": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "mix --production"
+  },
+  "devDependencies": {
+    "@wordpress/babel-preset-default": "^4.19.0",
+    "cross-env": "^7.0",
+    "laravel-mix": "^6.0.6",
+    "postcss": "^8.2.2",
+    "sass": "^1.29.0",
+    "sass-loader": "^8.0.2"
+  }
+}

@@ -3,8 +3,9 @@
  */
 import { buildQueryString } from './util';
 
+const endpoint = window.SiteTemplatePicker.endpoint;
+
 export async function getSiteTemplates( category ) {
-	const endpoint = 'https://mbcc.test/wp-json/wp/v2/site-templates';
 	const query = buildQueryString({
 		_fields: [ 'id', 'title', 'excerpt', 'featured_media', 'template_category', 'site_id', 'image', 'categories' ],
 		template_category: category
