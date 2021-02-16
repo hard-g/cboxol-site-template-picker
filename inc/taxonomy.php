@@ -48,6 +48,7 @@ function register() {
 			'query_var'         => false,
 			'rewrite'           => false,
 			'show_in_rest'      => true,
+			'rest_base'         => 'template-category',
 			'capabilities'      => [
 				'manage_terms' => 'manage_sites',
 				'edit_terms'   => 'manage_sites',
