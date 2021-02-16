@@ -18,7 +18,8 @@ const ROOT_DIR  = __DIR__;
 const ROOT_FILE = __FILE__;
 
 require_once ROOT_DIR . '/inc/functions.php';
+require_once ROOT_DIR . '/inc/rest.php';
 require_once ROOT_DIR . '/inc/post-type.php';
 require_once ROOT_DIR . '/inc/taxonomy.php';
-require_once ROOT_DIR . '/inc/rest.php';
+require_once ROOT_DIR . '/inc/groups.php';
 require_once ROOT_DIR . '/inc/sites.php';
