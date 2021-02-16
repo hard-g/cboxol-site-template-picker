@@ -46,7 +46,7 @@ function register_fields() {
 			'get_callback' => function( $object ) {
 				$data = [];
 
-				foreach ( $object['template-category'] as $term_id ) {
+				foreach ( $object['template_category'] as $term_id ) {
 					$term   = get_term_by( 'id', $term_id, 'cboxol_template_category' );
 					$data[] = $term ? $term->name : '';
 				}
