@@ -45,7 +45,7 @@
 	<arg name="parallel" value="20" />
 
 	<!-- Third-party or auto-generated code -->
-	<exclude-pattern>*/build/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/release/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>

@@ -31,7 +31,13 @@ function register_assets() {
 	wp_localize_script(
 		'cboxol-site-template-picker-script',
 		'SiteTemplatePicker',
-		[ 'endpoint' => rest_url( 'wp/v2/site-templates' ) ]
+		[
+			'endpoint' => rest_url( 'wp/v2/site-templates' ),
+			'messages' => [
+				'loading'   => esc_html__( 'Loading Templates...', 'cboxol-site-template-picker' ),
+				'noResults' => esc_html__( 'No templates were found.', 'cboxol-site-template-picker' ),
+			],
+		]
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\\register_assets' );

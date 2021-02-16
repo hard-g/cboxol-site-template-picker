@@ -133,7 +133,7 @@ function updated_messages( $messages ) {
 		2  => __( 'Custom field updated.', 'cboxol-site-template-picker' ),
 		3  => __( 'Custom field deleted.', 'cboxol-site-template-picker' ),
 		4  => __( 'Site Template updated.', 'cboxol-site-template-picker' ),
-		/* translators: %s: date and time of the revision */
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		5  => isset( $_GET['revision'] ) ? __( 'Site Template restored.', 'cboxol-site-template-picker' ) : false,
 		/* translators: %s: post permalink */
 		6  => sprintf( __( 'Site Template published. <a href="%s">View Site Template</a>', 'cboxol-site-template-picker' ), esc_url( $permalink ) ),
