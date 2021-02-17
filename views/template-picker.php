@@ -13,5 +13,6 @@
 		<div class="site-template-picker">
 			<p><?php esc_html_e( 'Loading Templates...', 'cboxol-site-template-picker' ); ?></p>
 		</div>
+		<input type="hidden" id="template-to-clone" name="template-to-clone" value="" />
 	</div>
 </div>

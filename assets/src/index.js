@@ -5,6 +5,7 @@ import { getSiteTemplates } from './api';
 
 const templatePicker = document.querySelector('.site-template-picker');
 const templateCategories = document.querySelector('#site-template-categories');
+const templateToClone = document.querySelector( '#template-to-clone' );
 const messages = window.SiteTemplatePicker.messages;
 
 function renderTemplate( { id, title, excerpt, image, categories } ) {
@@ -40,6 +41,9 @@ templateCategories.addEventListener( 'blur', function( event ) {
 	templatePicker.innerHTML = `<p>${ messages.loading }</p>`;
 
 	getSiteTemplates( category ).then( ( { templates } ) => {
+		// Reset template to clone input field.
+		templateToClone.value = '';
+
 		if ( ! templates.length ) {
 			templatePicker.innerHTML = `<p>${ messages.noResults }</p>`;
 			return;
@@ -49,3 +53,23 @@ templateCategories.addEventListener( 'blur', function( event ) {
 		templatePicker.innerHTML = compiled;
 	} );
 } )
+
+templatePicker.addEventListener( 'click', function( event ) {
+	const target = event.target.closest( '.site-template-component' );
+
+	if ( ! target ) {
+		return;
+	}
+
+	const templates = this.querySelectorAll( '.site-template-component' );
+	const templateId = target.dataset.templateId;
+
+	// Remove 'is-selected' marker for previously selected template.
+	templates.forEach( ( template ) => template.classList.remove( 'is-selected' ) );
+
+	// Mark current template as selected.
+	target.classList.add( 'is-selected' );
+
+	// Update input value for clone catcher method.
+	templateToClone.value = templateId;
+} );
