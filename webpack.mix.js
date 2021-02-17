@@ -10,15 +10,3 @@ mix.sass(`${assetPath}/sass/site-template-picker.scss`, `${assetPath}/css`)
 	.options({
 		processCssUrls: false
 	});
-
-/*
- * Add custom Webpack configuration.
- *
- * @link https://laravel.com/docs/8.x/mix#custom-webpack-configuration
- * @link https://webpack.js.org/configuration/
- */
-mix.webpackConfig( {
-	devtool      : false,
-	performance  : { hints  : false },
-	watchOptions : { ignored: /node_modeuls/, }
-} );
