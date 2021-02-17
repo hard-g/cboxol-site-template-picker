@@ -104,6 +104,13 @@ templatePicker.addEventListener( 'click', function( event ) {
 		return;
 	}
 
+	// Remove selection.
+	if ( target.classList.contains( 'is-selected' ) ) {
+		target.classList.remove( 'is-selected' );
+		templateToClone.value = '';
+		return;
+	}
+
 	const templates = this.querySelectorAll( '.site-template-component' );
 	const templateId = target.dataset.templateId;
 
