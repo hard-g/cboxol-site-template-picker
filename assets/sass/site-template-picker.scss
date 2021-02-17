@@ -25,7 +25,7 @@
 		outline-offset: 1px;
 	}
 
-	.has-hover {
+	&.has-hover {
 		.site-template-component__image {
 			position: relative;
 		}
@@ -67,6 +67,10 @@
 .site-template-component__description {
 	display: none;
 	position: absolute;
+
+	p {
+		margin: 0;
+	}
 }
 
 .site-template-component__meta {

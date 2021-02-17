@@ -1,4 +1,4 @@
-<div class="panel panel-default panel-template-picker">
+<div class="panel panel-default panel-template-picker hidden">
 	<div class="panel-heading"><?php esc_html_e( 'Associated Site Template', 'cboxol-site-template-picker' ); ?></div>
 	<div class="panel-body">
 		<div class="site-template-categories">

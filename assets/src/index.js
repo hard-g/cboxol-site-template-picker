@@ -3,11 +3,23 @@
  */
 import { getSiteTemplates } from './api';
 
-const templateCategories = document.querySelector('#site-template-categories');
-const templatePicker = document.querySelector('.site-template-picker');
+const templateCategories = document.querySelector( '#site-template-categories' );
+const templatePicker = document.querySelector( '.site-template-picker' );
+const templatePanel = document.querySelector( '.panel-template-picker' );
 const templatePagination = document.querySelector( '.site-template-pagination' );
 const templateToClone = document.querySelector( '#template-to-clone' );
+const setupSiteToggle = document.querySelector( '#set-up-site-toggle' );
+const siteType = document.querySelectorAll( '[name="new_or_old"]' );
 const messages = window.SiteTemplatePicker.messages;
+
+function init() {
+	getSiteTemplates().then( ( { templates, prev, next } ) => {
+		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
+		templatePicker.innerHTML = compiled;
+
+		updatePagination( prev, next );
+	} );
+}
 
 function renderTemplate( { id, title, excerpt, image, categories } ) {
 	return `
@@ -25,25 +37,6 @@ function renderTemplate( { id, title, excerpt, image, categories } ) {
 		</div>
 	</button>
 	`;
-}
-
-function updatePagination( prev, next ) {
-	const prevBtn = templatePagination.querySelector( '.prev' );
-	const nextBtn = templatePagination.querySelector( '.next' );
-
-	// Button are enabled later if we have pages.
-	prevBtn.disabled = true;
-	nextBtn.disabled = true;
-
-	if ( prev ) {
-		prevBtn.dataset.page = prev;
-		prevBtn.disabled = false;
-	}
-
-	if ( next ) {
-		nextBtn.dataset.page = next;
-		nextBtn.disabled = false;
-	}
 }
 
 function updateTemplates( category, page ) {
@@ -65,13 +58,35 @@ function updateTemplates( category, page ) {
 	} );
 }
 
-function init() {
-	getSiteTemplates().then( ( { templates, prev, next } ) => {
-		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
-		templatePicker.innerHTML = compiled;
+function updatePagination( prev, next ) {
+	const prevBtn = templatePagination.querySelector( '.prev' );
+	const nextBtn = templatePagination.querySelector( '.next' );
 
-		updatePagination( prev, next );
-	} );
+	// Button are enabled later if we have pages.
+	prevBtn.disabled = true;
+	nextBtn.disabled = true;
+
+	if ( prev ) {
+		prevBtn.dataset.page = prev;
+		prevBtn.disabled = false;
+	}
+
+	if ( next ) {
+		nextBtn.dataset.page = next;
+		nextBtn.disabled = false;
+	}
+}
+
+function togglePanel( display = false ) {
+	if ( display ) {
+		templatePanel.classList.remove( 'hidden' );
+		return;
+	}
+
+	templatePanel.classList.add( 'hidden' );
+
+	// Remove template ID when hidden.
+	templateToClone.value = '';
 }
 
 templateCategories.addEventListener( 'blur', function( event ) {
@@ -115,5 +130,16 @@ templatePagination.addEventListener( 'click', function( event ) {
 	updateTemplates( category, page );
 } );
 
-// Render first templates.
+siteType.forEach( ( typeSelect ) => {
+	typeSelect.addEventListener( 'change', ( event ) => togglePanel( event.target.value === 'new' ) );
+} );
+
+setupSiteToggle.addEventListener( 'change', ( event ) => togglePanel( event.target.checked ) );
+
+if ( templatePanel.checked ) {
+	// Display the panel.
+	togglePanel( templatePanel.checked );
+}
+
+// Prefetch templates.
 init();
