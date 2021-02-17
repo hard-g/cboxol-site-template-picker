@@ -6,7 +6,7 @@ import { buildQueryString } from './util';
 const endpoint = window.SiteTemplatePicker.endpoint;
 
 export async function getSiteTemplates( category ) {
-	const query = buildQueryString({
+	const query = buildQueryString( {
 		_fields: [ 'id', 'title', 'excerpt', 'featured_media', 'template_category', 'site_id', 'image', 'categories' ],
 		template_category: category
 	} );

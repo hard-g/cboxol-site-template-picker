@@ -25,7 +25,7 @@ function render_template_picker() {
 		[
 			'taxonomy'   => 'cboxol_template_category',
 			'number'     => 0,
-			'hide_empty' => true,
+			'hide_empty' => false,
 		]
 	);
 

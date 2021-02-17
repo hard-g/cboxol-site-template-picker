@@ -5,6 +5,7 @@ import { getSiteTemplates } from './api';
 
 const templatePicker = document.querySelector('.site-template-picker');
 const templateCategories = document.querySelector('#site-template-categories');
+const messages = window.SiteTemplatePicker.messages;
 
 function renderTemplate( { id, title, excerpt, image, categories } ) {
 	return `
@@ -36,9 +37,14 @@ init();
 templateCategories.addEventListener( 'blur', function( event ) {
 	const category = ( event.target.value !== '0' ) ? event.target.value : null;
 
-	templatePicker.innerHTML = `<p>Loading templates...</p>`;
+	templatePicker.innerHTML = `<p>${ messages.loading }</p>`;
 
 	getSiteTemplates( category ).then( ( { templates } ) => {
+		if ( ! templates.length ) {
+			templatePicker.innerHTML = `<p>${ messages.noResults }</p>`;
+			return;
+		}
+
 		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
 		templatePicker.innerHTML = compiled;
 	} );
