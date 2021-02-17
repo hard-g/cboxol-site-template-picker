@@ -13,6 +13,10 @@
 		<div class="site-template-picker">
 			<p><?php esc_html_e( 'Loading Templates...', 'cboxol-site-template-picker' ); ?></p>
 		</div>
+		<div class="site-template-pagination">
+			<button type="button" class="btn btn-primary prev"><?php esc_html_e( 'Previous', 'cboxol-site-template-picker' ); ?></button>
+			<button type="button" class="btn btn-primary next"><?php esc_html_e( 'Next', 'cboxol-site-template-picker' ); ?></button>
+		</div>
 		<input type="hidden" id="template-to-clone" name="template-to-clone" value="" />
 	</div>
 </div>

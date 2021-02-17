@@ -3,8 +3,9 @@
  */
 import { getSiteTemplates } from './api';
 
-const templatePicker = document.querySelector('.site-template-picker');
 const templateCategories = document.querySelector('#site-template-categories');
+const templatePicker = document.querySelector('.site-template-picker');
+const templatePagination = document.querySelector( '.site-template-pagination' );
 const templateToClone = document.querySelector( '#template-to-clone' );
 const messages = window.SiteTemplatePicker.messages;
 
@@ -26,21 +27,29 @@ function renderTemplate( { id, title, excerpt, image, categories } ) {
 	`;
 }
 
-function init() {
-	getSiteTemplates().then( ( { templates } ) => {
-		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
-		templatePicker.innerHTML = compiled;
-	} );
+function updatePagination( prev, next ) {
+	const prevBtn = templatePagination.querySelector( '.prev' );
+	const nextBtn = templatePagination.querySelector( '.next' );
+
+	// Button are enabled later if we have pages.
+	prevBtn.disabled = true;
+	nextBtn.disabled = true;
+
+	if ( prev ) {
+		prevBtn.dataset.page = prev;
+		prevBtn.disabled = false;
+	}
+
+	if ( next ) {
+		nextBtn.dataset.page = next;
+		nextBtn.disabled = false;
+	}
 }
 
-init();
-
-templateCategories.addEventListener( 'blur', function( event ) {
-	const category = ( event.target.value !== '0' ) ? event.target.value : null;
-
+function updateTemplates( category, page ) {
 	templatePicker.innerHTML = `<p>${ messages.loading }</p>`;
 
-	getSiteTemplates( category ).then( ( { templates } ) => {
+	getSiteTemplates( category, page ).then( ( { templates, prev, next } ) => {
 		// Reset template to clone input field.
 		templateToClone.value = '';
 
@@ -51,7 +60,26 @@ templateCategories.addEventListener( 'blur', function( event ) {
 
 		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
 		templatePicker.innerHTML = compiled;
+
+		updatePagination( prev, next );
 	} );
+}
+
+function init() {
+	getSiteTemplates().then( ( { templates, prev, next } ) => {
+		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
+		templatePicker.innerHTML = compiled;
+
+		updatePagination( prev, next );
+	} );
+}
+
+templateCategories.addEventListener( 'blur', function( event ) {
+	const category = ( event.target.value !== '0' ) ? event.target.value : null;
+
+	templatePicker.innerHTML = `<p>${ messages.loading }</p>`;
+
+	updateTemplates( category );
 } )
 
 templatePicker.addEventListener( 'click', function( event ) {
@@ -73,3 +101,19 @@ templatePicker.addEventListener( 'click', function( event ) {
 	// Update input value for clone catcher method.
 	templateToClone.value = templateId;
 } );
+
+templatePagination.addEventListener( 'click', function( event ) {
+	const target = event.target.closest( '.btn' );
+
+	if ( ! target ) {
+		return;
+	}
+
+	const category = ( templateCategories.value !== '0' ) ? templateCategories.value : null;
+	const page = target.dataset.page ? Number( target.dataset.page ) : null;
+
+	updateTemplates( category, page );
+} );
+
+// Render first templates.
+init();

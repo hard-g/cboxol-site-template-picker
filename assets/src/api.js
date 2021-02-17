@@ -4,11 +4,14 @@
 import { buildQueryString } from './util';
 
 const endpoint = window.SiteTemplatePicker.endpoint;
+const perPage = window.SiteTemplatePicker.perPage;
 
-export async function getSiteTemplates( category ) {
+export async function getSiteTemplates( category, page = 1 ) {
 	const query = buildQueryString( {
 		_fields: [ 'id', 'title', 'excerpt', 'featured_media', 'template_category', 'site_id', 'image', 'categories' ],
-		template_category: category
+		template_category: category,
+		per_page: Number( perPage ),
+		page,
 	} );
 
 	const response = await fetch( endpoint + '?' + query )
@@ -18,7 +21,6 @@ export async function getSiteTemplates( category ) {
 		throw new Error( items.message );
 	}
 
-	const total = Number( response.headers.get( 'X-WP-Total' ) );
 	const totalPages = Number( response.headers.get( 'X-WP-TotalPages' ) );
 
 	const templates = items.map( ( item ) => {
@@ -31,5 +33,9 @@ export async function getSiteTemplates( category ) {
 		};
 	} );
 
-	return { templates, total, totalPages };
+	return {
+		templates,
+		prev: page > 1 ? page - 1 : null,
+		next: totalPages > page ? page + 1 : null,
+	};
 }
