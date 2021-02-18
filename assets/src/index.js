@@ -12,15 +12,6 @@ const setupSiteToggle = document.querySelector( '#set-up-site-toggle' );
 const siteType = document.querySelectorAll( '[name="new_or_old"]' );
 const messages = window.SiteTemplatePicker.messages;
 
-function init() {
-	getSiteTemplates().then( ( { templates, prev, next } ) => {
-		const compiled = templates.map( ( template ) => renderTemplate( template ) ).join('');
-		templatePicker.innerHTML = compiled;
-
-		updatePagination( prev, next );
-	} );
-}
-
 function renderTemplate( { id, title, excerpt, image, categories } ) {
 	return `
 	<button type="button" class="site-template-component" data-template-id="${ id }">
@@ -29,7 +20,7 @@ function renderTemplate( { id, title, excerpt, image, categories } ) {
 				? `<img src="${ image }" alt="${ title }">`
 				: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>`
 			}
-			${ excerpt ? `<div class="site-template-component__description">${ excerpt }</div>` : `` }
+			<div class="site-template-component__description">${ excerpt }</div>
 		</div>
 		<div class="site-template-component__meta">
 			<span class="site-template-component__category">${ categories.join( ', ' ) }</span>
@@ -97,7 +88,7 @@ function togglePanel( display = false ) {
 	templateToClone.value = '';
 }
 
-templateCategories.addEventListener( 'blur', function( event ) {
+templateCategories.addEventListener( 'change', function( event ) {
 	const category = ( event.target.value !== '0' ) ? event.target.value : null;
 
 	templatePicker.innerHTML = `<p>${ messages.loading }</p>`;
@@ -132,6 +123,32 @@ templatePicker.addEventListener( 'click', function( event ) {
 	templateToClone.value = templateId;
 } );
 
+templatePicker.addEventListener( 'mouseover', function( event ) {
+	const template = event.target.closest( '.site-template-component' );
+
+	if ( ! template ) {
+		return;
+	}
+
+	// Not using toggle since this event does bubble.
+	if ( ! template.classList.contains( 'has-hover' ) ) {
+		template.classList.add( 'has-hover' );
+	}
+} );
+
+templatePicker.addEventListener( 'mouseout', function( event ) {
+	const template = event.target.closest( '.site-template-component' );
+
+	if ( ! template ) {
+		return;
+	}
+
+	// Not using toggle since this event does bubble.
+	if ( template.classList.contains( 'has-hover' ) ) {
+		template.classList.remove( 'has-hover' );
+	}
+} );
+
 templatePagination.addEventListener( 'click', function( event ) {
 	const target = event.target.closest( '.btn' );
 
@@ -157,4 +174,4 @@ if ( templatePanel.checked ) {
 }
 
 // Prefetch templates.
-init();
+updateTemplates();
