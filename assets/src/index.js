@@ -7,10 +7,13 @@ const templateCategories = document.querySelector( '#site-template-categories' )
 const templatePicker = document.querySelector( '.site-template-picker' );
 const templatePanel = document.querySelector( '.panel-template-picker' );
 const templatePagination = document.querySelector( '.site-template-pagination' );
-const templateToClone = document.querySelector( '#template-to-clone' );
+const templateToClone = document.querySelector( '[name="source_blog"]' );
 const setupSiteToggle = document.querySelector( '#set-up-site-toggle' );
 const siteType = document.querySelectorAll( '[name="new_or_old"]' );
 const messages = window.SiteTemplatePicker.messages;
+
+// Cache default template. Usually it's group type site template.
+const defaultTemplate = templateToClone.value || '0';
 
 function renderTemplate( { id, title, excerpt, image, categories } ) {
 	return `
@@ -34,8 +37,8 @@ function updateTemplates( category, page ) {
 	templatePicker.innerHTML = `<p>${ messages.loading }</p>`;
 
 	getSiteTemplates( category, page ).then( ( { templates, prev, next } ) => {
-		// Reset template to clone input field.
-		templateToClone.value = '';
+		// Restore template to default value.
+		templateToClone.value = defaultTemplate;
 
 		if ( ! templates.length ) {
 			templatePicker.innerHTML = `<p>${ messages.noResults }</p>`;
@@ -84,8 +87,8 @@ function togglePanel( display = false ) {
 
 	templatePanel.classList.add( 'hidden' );
 
-	// Remove template ID when hidden.
-	templateToClone.value = '';
+	// Restore template to default value.
+	templateToClone.value = defaultTemplate;
 }
 
 templateCategories.addEventListener( 'change', function( event ) {
@@ -106,7 +109,7 @@ templatePicker.addEventListener( 'click', function( event ) {
 	// Remove selection.
 	if ( target.classList.contains( 'is-selected' ) ) {
 		target.classList.remove( 'is-selected' );
-		templateToClone.value = '';
+		templateToClone.value = defaultTemplate;
 		return;
 	}
 
