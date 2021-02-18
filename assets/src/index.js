@@ -62,6 +62,14 @@ function updatePagination( prev, next ) {
 	const prevBtn = templatePagination.querySelector( '.prev' );
 	const nextBtn = templatePagination.querySelector( '.next' );
 
+	const isVisible = templatePagination.classList.contains( 'hidden' );
+	const hide = ! prev && ! next && ! isVisible;
+
+	// Hide pagination if we have only one page.
+	if ( hide ) {
+		templatePagination.classList.add( 'hidden' );
+	}
+
 	// Button are enabled later if we have pages.
 	prevBtn.disabled = true;
 	nextBtn.disabled = true;

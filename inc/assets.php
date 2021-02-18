@@ -33,7 +33,7 @@ function register_assets() {
 		'SiteTemplatePicker',
 		[
 			'endpoint' => rest_url( 'wp/v2/site-templates' ),
-			'perPage'  => 6,
+			'perPage'  => 3,
 			'messages' => [
 				'loading'   => esc_html__( 'Loading Templates...', 'cboxol-site-template-picker' ),
 				'noResults' => esc_html__( 'No templates were found.', 'cboxol-site-template-picker' ),
