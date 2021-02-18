@@ -1,6 +1,6 @@
 .site-template-picker {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(150px, 1fr));
+	grid-template-columns: repeat(1, minmax(150px, 1fr));
 	gap: 10px;
 }
 
@@ -100,5 +100,17 @@
 
 	.prev {
 		margin-right: 15px;
+	}
+}
+
+@media (min-width: 768px) {
+	.site-template-picker {
+		grid-template-columns: repeat(2, minmax(150px, 1fr));
+	}
+}
+
+@media (min-width: 992px) {
+	.site-template-picker {
+		grid-template-columns: repeat(3, minmax(150px, 1fr));
 	}
 }
