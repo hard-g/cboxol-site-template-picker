@@ -3,13 +3,26 @@
  */
 import { buildQueryString } from './util';
 
-const endpoint = window.SiteTemplatePicker.endpoint;
-const perPage = window.SiteTemplatePicker.perPage;
+const { endpoint, perPage, categoryMap } = window.SiteTemplatePicker;
+const currentGroupType = window.CBOXOL_Group_Create.new_group_type;
 
 export async function getSiteTemplates( category, page = 1 ) {
+	let templateCategory;
+
+	if ( ! category ) {
+		templateCategory = [ 0 ]
+		for ( var catId in categoryMap ) {
+			if ( -1 !== categoryMap[ catId ].indexOf( currentGroupType ) ) {
+				templateCategory.push( catId )
+			}
+		}
+	} else {
+		templateCategory = category
+	}
+
 	const query = buildQueryString( {
 		_fields: [ 'id', 'title', 'excerpt', 'featured_media', 'template_category', 'site_id', 'image', 'categories' ],
-		template_category: category,
+		template_category: templateCategory,
 		order: 'desc',
 		per_page: Number( perPage ),
 		page,

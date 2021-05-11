@@ -46,7 +46,7 @@ function register() {
 			'public'               => false,
 			'hierarchical'         => false,
 			'show_ui'              => true,
-			'show_in_menu'         => false,
+			'show_in_menu'         => true,
 			'show_in_nav_menus'    => false,
 			'register_meta_box_cb' => __NAMESPACE__ . '\\register_meta_boxes',
 			'supports'             => [ 'title', 'excerpt', 'thumbnail' ],

@@ -21,13 +21,30 @@ function render_template_picker() {
 		return;
 	}
 
+	// Don't display template picker if there's no group type.
+	$group_type = cboxol_get_group_group_type( $group_id );
+	if ( ! $group_type || is_wp_error( $group_type ) ) {
+		return;
+	}
+
 	$categories = get_terms(
 		[
 			'taxonomy'   => 'cboxol_template_category',
 			'number'     => 0,
 			'hide_empty' => false,
+			'meta_query' => [
+				[
+					'key'   => 'cboxol_group_type',
+					'value' => $group_type->get_slug(),
+				],
+			],
 		]
 	);
+
+	// If there are no valid categories, then there's nothing to show.
+	if ( empty( $categories ) ) {
+		return;
+	}
 
 	if ( is_wp_error( $categories ) ) {
 		$categories = [];

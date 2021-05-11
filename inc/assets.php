@@ -7,6 +7,8 @@ namespace CBOX\OL\SiteTemplatePicker\Assets;
 use const CBOX\OL\SiteTemplatePicker\VERSION;
 use const CBOX\OL\SiteTemplatePicker\ROOT_FILE;
 
+use function CBOX\OL\SiteTemplatePicker\Taxonomy\get_group_types;
+
 /**
  * Register template picker assets.
  *
@@ -28,17 +30,30 @@ function register_assets() {
 		true
 	);
 
+	$all_categories = get_terms(
+		[
+			'taxonomy'   => 'cboxol_template_category',
+			'hide_empty' => false,
+		]
+	);
+
+	$category_map = [];
+	foreach ( $all_categories as $cat ) {
+		$category_map[ $cat->term_id ] = get_group_types( $cat->term_id );
+	}
+
 	wp_localize_script(
 		'cboxol-site-template-picker-script',
 		'SiteTemplatePicker',
 		[
-			'endpoint' => rest_url( 'wp/v2/site-templates' ),
-			'perPage'  => 6,
-			'messages' => [
+			'endpoint'    => rest_url( 'wp/v2/site-templates' ),
+			'perPage'     => 6,
+			'categoryMap' => $category_map,
+			'messages'    => [
 				'loading'   => esc_html__( 'Loading Templates...', 'cboxol-site-template-picker' ),
 				'noResults' => esc_html__( 'No templates were found.', 'cboxol-site-template-picker' ),
 			],
 		]
 	);
 }
-add_action( 'init', __NAMESPACE__ . '\\register_assets' );
+add_action( 'init', __NAMESPACE__ . '\\register_assets', 20 );
