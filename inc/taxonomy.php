@@ -118,6 +118,10 @@ function append_group_types_to_labels( $terms ) {
 	$all_group_types = cboxol_get_group_types();
 
 	foreach ( $terms as &$term ) {
+		if ( ! ( $term instanceof \WP_Term ) ) {
+			continue;
+		}
+
 		$type_labels = get_term_group_type_labels( $term->term_id );
 
 		if ( $type_labels ) {
