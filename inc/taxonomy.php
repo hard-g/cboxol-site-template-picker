@@ -92,7 +92,7 @@ add_filter( 'term_updated_messages', __NAMESPACE__ . '\\updated_messages' );
  * @return array
  */
 function get_group_types( $term_id ) {
-	return get_term_meta( $term_id, 'cboxol_group_type', false );
+	return (array) get_term_meta( $term_id, 'cboxol_group_type', false );
 }
 
 /**
