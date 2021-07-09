@@ -169,11 +169,16 @@ siteType.forEach( ( typeSelect ) => {
 	typeSelect.addEventListener( 'change', ( event ) => togglePanel( event.target.value === 'new' ) );
 } );
 
-setupSiteToggle.addEventListener( 'change', ( event ) => togglePanel( event.target.checked ) );
+if ( setupSiteToggle ) {
+	setupSiteToggle.addEventListener( 'change', ( event ) => togglePanel( event.target.checked ) );
 
-if ( templatePanel.checked ) {
-	// Display the panel.
-	togglePanel( templatePanel.checked );
+	if ( setupSiteToggle.checked ) {
+		// Display the panel.
+		togglePanel( templatePanel.checked );
+	}
+} else {
+	// If the setupSiteToggle doesn't exist, it means that sites are required for this group type.
+	togglePanel( true );
 }
 
 // Prefetch templates.
