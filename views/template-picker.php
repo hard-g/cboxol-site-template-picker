@@ -1,6 +1,10 @@
 <div class="panel panel-default panel-template-picker hidden">
 	<div class="panel-heading"><?php esc_html_e( 'Associated Site Template', 'cboxol-site-template-picker' ); ?></div>
 	<div class="panel-body">
+		<?php if ( $gloss ) : ?>
+			<p class="site-template-gloss"><?php echo wp_kses_post( $gloss ); ?></p>
+		<?php endif; ?>
+
 		<div class="site-template-categories">
 			<label for="site-template-categories"><?php esc_html_e( 'Filter by Category:', 'cboxol-site-template-picker' ); ?></label>
 			<select class="form-control" name="site-template-categories" id="site-template-categories">

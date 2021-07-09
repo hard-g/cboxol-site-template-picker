@@ -50,9 +50,11 @@ function render_template_picker() {
 		$categories = [];
 	}
 
+	$gloss = get_option( 'cboxol_stp_gloss', '' );
+
 	wp_enqueue_style( 'cboxol-site-template-picker-style' );
 	wp_enqueue_script( 'cboxol-site-template-picker-script' );
 
-	view( 'template-picker.php', [ 'categories' => $categories ] );
+	view( 'template-picker.php', [ 'categories' => $categories, 'gloss' => $gloss ] );
 }
 add_action( 'openlab_after_group_site_markup', __NAMESPACE__ . '\\render_template_picker' );
