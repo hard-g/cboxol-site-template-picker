@@ -244,6 +244,53 @@ function create_site_template( $post_id, \WP_Post $post ) {
 		return;
 	}
 
+	switch_to_blog( $site_id );
+
+	// Create default menu items.
+	$menu_name = wp_slash( __( 'Main Menu', 'cboxol-site-template-picker' ) );
+	$menu_id   = wp_create_nav_menu( $menu_name );
+
+	$group_menu_item_id = wp_update_nav_menu_item(
+		$menu_id,
+		0,
+		array(
+			'menu-item-title'   => __( 'Group Home', 'cboxol-site-template-picker' ),
+			'menu-item-url'     => home_url( '/group-profile' ),
+			'menu-item-status'  => 'publish',
+			'menu-item-type'    => 'custom',
+			'menu-item-classes' => 'group-profile-link',
+		)
+	);
+
+	$home_menu_item_id = wp_update_nav_menu_item(
+		$menu_id,
+		0,
+		array(
+			'menu-item-title'   => __( 'Home', 'cboxol-site-template-picker' ),
+			'menu-item-url'     => home_url( '/' ),
+			'menu-item-status'  => 'publish',
+			'menu-item-type'    => 'custom',
+			'menu-item-classes' => 'home',
+		)
+	);
+
+	// Store flag for injected custom menu items
+	add_term_meta(
+		$menu_id,
+		'cboxol_custom_menus',
+		array(
+			'group' => is_wp_error( $group_menu_item_id ) ? 0 : $group_menu_item_id,
+			'home'  => is_wp_error( $home_menu_item_id ) ? 0 : $home_menu_item_id,
+		),
+		true
+	);
+
+	$locations            = get_theme_mod( 'nav_menu_locations' );
+	$locations['primary'] = $menu_id;
+	set_theme_mod( 'nav_menu_locations', $locations );
+
+	restore_current_blog();
+
 	// Save template ID for syncing.
 	update_site_meta( $site_id, '_site_template_id', $post_id );
 
